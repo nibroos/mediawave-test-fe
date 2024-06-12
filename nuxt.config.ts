@@ -5,9 +5,10 @@ import { resolve } from 'path'
 export default defineNuxtConfig({
   devtools: { enabled: true },
   spaLoadingTemplate: false,
+  // extends: ['github:YubiRepo/D-ERP-UI', { auth: process.env.GITHUB_TOKEN }],
   app: {
     head: {
-      title: 'K-Motion'
+      title: 'Test Ogya FE'
     }
   },
   css: [
