@@ -13,8 +13,7 @@ const isDark = usePreferredDark()
 </script>
 
 <template>
-  <div @click="clickDiv()">
-    Test {{ titlePath }}
-    {{ isDark }}
+  <div>
+
   </div>
 </template>
