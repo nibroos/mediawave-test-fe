@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   // extends: ['github:YubiRepo/D-ERP-UI', { auth: process.env.GITHUB_TOKEN }],
   app: {
     head: {
-      title: 'Test Ogya FE'
+      title: process.env.TITLE || 'NUXT APP',
     }
   },
   css: [

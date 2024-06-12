@@ -22,10 +22,13 @@
     "@vueuse/nuxt": "^10.9.0",
     "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
+    "maska": "^2.1.11",
     "nuxt": "^3.11.2",
+    "nuxt-icon": "^0.6.8",
     "pinia": "^2.1.7",
     "qs": "^6.12.0",
     "vue": "^3.4.21",
+    "vue-currency-input": "^3.1.0",
     "vue-final-modal": "^3.4.11",
     "vue-router": "^4.3.0",
     "vue-sweetalert2": "^5.0.5"

@@ -14,6 +14,6 @@ const isDark = usePreferredDark()
 
 <template>
   <div>
-    test
+    Welkam Nibros
   </div>
 </template>

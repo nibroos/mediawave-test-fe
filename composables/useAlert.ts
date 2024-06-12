@@ -26,7 +26,8 @@ const showPopupConfirmation = async (
   title?: string,
   text?: string,
   confirButtonText?: string,
-  showCancelButton: boolean = true
+  showCancelButton: boolean = true,
+  opt?: any
 ) => {
   return Swal.fire({
     title: title || 'Are you sure want to delete this data?',
@@ -34,8 +35,28 @@ const showPopupConfirmation = async (
     icon: 'warning',
     showCancelButton: showCancelButton,
     confirmButtonColor: '#d33',
-    confirmButtonText: confirButtonText || 'Ok',
-    cancelButtonText: 'Cancel'
+    confirmButtonText: confirButtonText || 'Accept',
+    cancelButtonText: 'Cancel',
+    allowOutsideClick: opt?.hasOwnProperty('allowOutsideClick')
+      ? opt.allowOutsideClick
+      : true,
+    allowEscapeKey: opt?.hasOwnProperty('allowEscapeKey')
+      ? opt.allowEscapeKey
+      : true,
+    allowEnterKey: opt?.hasOwnProperty('allowEnterKey')
+      ? opt.allowEnterKey
+      : true,
+    customClass: {
+      popup: opt?.customClass?.popup || 'p-3',
+      container: opt?.customClass?.container || '',
+      actions: opt?.customClass?.actions || 'flex gap-3 w-full',
+      confirmButton:
+        opt?.customClass?.confirmButton ||
+        '!bg-[#4094D4] transition-all ease-in-out hover:!bg-[#3882ba] text-white grow',
+      cancelButton:
+        opt?.customClass?.cancelButton ||
+        '!border !border-solid !text-rose-700 !border-rose-700 transition-all ease-in-out !bg-white hover:!bg-rose-50 grow'
+    }
   }).then((result) => result.isConfirmed)
 }
 

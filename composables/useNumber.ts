@@ -72,7 +72,8 @@ function formatWithoutCurrencySymbol(
   const formattedAmount = formatter.format(parseFloat(amount))
 
   const currencySymbolRegex = /[^\d.,]+/
-  const currencySymbol = formattedAmount.match(currencySymbolRegex)[0]
+  const currencySymbolMatch = formattedAmount.match(currencySymbolRegex)
+  const currencySymbol = currencySymbolMatch ? currencySymbolMatch[0] : ''
 
   const formattedWithoutSymbol = formattedAmount
     .replace(currencySymbol, '')
