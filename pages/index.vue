@@ -5,10 +5,6 @@ const layoutStore = useLayoutsStore()
 const { titlePath, subTitlePath, lastPathSegment, parentTitle, topTitle } =
   storeToRefs(layoutStore)
 
-const clickDiv = () => {
-  titlePath.value = 'changed2'
-}
-
 const isDark = usePreferredDark()
 </script>
 
