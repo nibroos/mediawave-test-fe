@@ -32,9 +32,9 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      API: process.env.API_URL || 'http://103.191.63.132',
+      API: process.env.API_URL || 'http://test-erp.test',
       BASE_URL_IMAGE:
-        process.env.BASE_URL || 'http://103.191.63.132/erp/d-erp/d-erp-backend'
+        process.env.IMG_BASE_URL || 'http://test-erp.test'
     }
   },
   modules: [
