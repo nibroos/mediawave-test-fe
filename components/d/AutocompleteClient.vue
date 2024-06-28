@@ -59,9 +59,9 @@ const handleClear = async () => {
   options.value = initialItems.value
   emit('click:clear')
 }
-const removeDuplicates = (array:any) => {
+const removeDuplicates = (array: any) => {
   const uniqueIds = new Set()
-  return array.filter((item:any) => {
+  return array.filter((item: any) => {
     if (!uniqueIds.has(item.id)) {
       uniqueIds.add(item.id)
       return true
@@ -77,12 +77,12 @@ watch(innerSearch, async (searchValue: string) => {
     // deep search all on props.items "like searchValue"
     const filteredItems = props.items.filter((item) => {
       return props.displayMultipleKeys.some((key) => {
-        return item[key].toLowerCase().includes(searchValue.toLowerCase())
+        return item[key]?.toLowerCase().includes(searchValue.toLowerCase())
       })
     })
-  if (props.checkDuplicate==true) {
-    options.value = removeDuplicates(options.value)
-  }
+    if (props.checkDuplicate == true) {
+      options.value = removeDuplicates(options.value)
+    }
     options.value = filteredItems
 
     // options.value = []
@@ -130,10 +130,10 @@ watch(
 onMounted(() => {
 
   selected.value = null
-  if(props.checkDuplicate==true){
+  if (props.checkDuplicate == true) {
     options.value = removeDuplicates(options.value)
 
-    
+
   }
 
   if (props.modelValue) {
@@ -145,7 +145,7 @@ onMounted(() => {
   }
 })
 
-watchEffect(() => {})
+watchEffect(() => { })
 
 watch(
   () => props.modelValue,
@@ -175,44 +175,21 @@ watch(
 </script>
 
 <template>
-  <v-autocomplete
-    v-model="selected"
-    :label="props.label"
-    :items="options"
-    :variant="props.variant"
-    :density="props.density"
-    :item-title="props.itemTitle"
-    :item-value="props.itemValue"
-    :clearable="props.clearable"
-    :placeholder="props.placeholder"
-    :disabled="props.disabled"
-    :class="props.aClass"
-    :loading="loadingSearch"
-    :chips="props.chips"
-    @update:search="innerSearch = $event"
-    @update:menu="onMenuChange"
-    @update:focused="onFocus"
-    @click:clear="handleClear"
-    hide-details
-    no-filter
-  >
+  <v-autocomplete v-model="selected" :label="props.label" :items="options" :variant="props.variant"
+    :density="props.density" :item-title="props.itemTitle" :item-value="props.itemValue" :clearable="props.clearable"
+    :placeholder="props.placeholder" :disabled="props.disabled" :class="props.aClass" :loading="loadingSearch"
+    :chips="props.chips" @update:search="innerSearch = $event" @update:menu="onMenuChange" @update:focused="onFocus"
+    @click:clear="handleClear" hide-details no-filter>
     <template v-slot:selection="{ item }">
       <span class="whitespace-nowrap">
         <!-- {{ item.raw }} -->
-        <d-shorttext
-          :text="getDisplayMultipleKeys(item.raw) || displayTitle || item.title"
-          :max-length="Number(props.maxLengthDisplay)"
-          :class="props.aClass"
-          :start-align="props.startAlignDisplay"
-        />
+        <d-shorttext :text="getDisplayMultipleKeys(item.raw) || displayTitle || item.title"
+          :max-length="Number(props.maxLengthDisplay)" :class="props.aClass" :start-align="props.startAlignDisplay" />
       </span>
     </template>
 
     <template v-slot:item="{ props, item }">
-      <v-list-item
-        v-bind="props"
-        :title="getDisplayMultipleKeys(item.raw) || displayTitle || item.title"
-      ></v-list-item>
+      <v-list-item v-bind="props" :title="getDisplayMultipleKeys(item.raw) || displayTitle || item.title"></v-list-item>
     </template>
   </v-autocomplete>
 </template>

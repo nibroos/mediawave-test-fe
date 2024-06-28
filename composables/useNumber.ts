@@ -82,7 +82,7 @@ function formatWithoutCurrencySymbol(
   return formattedWithoutSymbol
 }
 
-function formatNumberSeparator(
+export function formatNumberSeparator(
   amount: any,
   minimumFractionDigits = 3,
   maximumFractionDigits = 3,

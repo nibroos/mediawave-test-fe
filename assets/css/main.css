@@ -5,3 +5,66 @@
 :root {
   font-family: 'Roboto';
 }
+
+body {}
+
+body {
+  --sb-track-color: #d8e4e8;
+  --sb-thumb-color: #77b7ff;
+  --sb-size: 10px;
+
+  scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+}
+
+body::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 10px;
+}
+
+.sticky-right {
+  position: sticky !important;
+  right: 0 !important;
+  z-index: 1;
+}
+
+
+.action-table {
+  height: 100%;
+  white-space: nowrap;
+  text-align: right;
+  position: relative;
+}
+
+.action-table .action-button {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  transform: translate(0, -50%);
+  height: 100%;
+  transition: all 0.05s ease;
+  opacity: 0;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-right: 0.5rem;
+  z-index: 5;
+}
+
+.action-table .action-button a {
+  margin-right: 0.25em;
+}
+
+.table-hover tbody tr:hover td.action-table .action-button {
+  opacity: 1;
+  background-color: #f5f5f5 !important;
+}

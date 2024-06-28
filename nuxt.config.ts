@@ -34,7 +34,8 @@ export default defineNuxtConfig({
     public: {
       API: process.env.API_URL || 'http://test-erp.test',
       BASE_URL_IMAGE:
-        process.env.IMG_BASE_URL || 'http://test-erp.test'
+        process.env.IMG_BASE_URL || 'http://test-erp.test',
+        COVID_API: process.env.COVID_API || 'https://covid19.mathdro.id/api',
     }
   },
   modules: [
@@ -45,6 +46,8 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
     '@nuxtjs/tailwindcss',
     '@nuxt/image',
+    '@nuxtjs/leaflet',
+    'nuxt-highcharts',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
         config.plugins?.push(vuetify({ autoImport: true }))

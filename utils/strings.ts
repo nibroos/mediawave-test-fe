@@ -1,4 +1,7 @@
 import type { LabelSplitterType } from '~/types/DatatableClientType'
+import { twMerge, type ClassNameValue } from 'tailwind-merge'
+import { normalizeClass } from 'vue'
+
 export const clean_xss = (str: string) => {
   if (typeof str === 'undefined' || str === null) return ''
   if (typeof str !== 'string') return str
@@ -43,4 +46,8 @@ export const referenceOptions = (
   display = splitLabelComplex(refSelected, refLabel)
 
   return display
+}
+
+export const classMerge = (...classes: ClassNameValue[]) => {
+  return twMerge(normalizeClass(classes))
 }
