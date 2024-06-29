@@ -1,0 +1,1 @@
+import{_ as s,t,v as n,bi as c}from"./DPHdV5Tz.js";const r={},a={class:"bg-zinc-50 antialiased min-h-screen tracking-wider"};function o(e,i){return t(),n("div",a,[c(e.$slots,"default")])}const d=s(r,[["render",o]]);export{d as default};
