@@ -14,7 +14,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="px-[15vw] w-full flex flex-col gap-5">
+  <div class="px-[15vw] w-full flex flex-col gap-5 py-5">
 
     <div class="flex flex-row gap-3">
       <form class="flex flex-row w-2/3 gap-3" @submit.prevent="casesStore.getAllCovidCase()">
@@ -22,7 +22,7 @@ onMounted(async () => {
 
         <d-autocomplete-client v-model="query.all_covid_case.iso" :items="references?.regions ?? []" item-title="name"
           item-value="iso" max-length-display="40" :is-display-multiple-key="true" label="Region" class="w-full"
-          :display-multiple-keys="['iso', 'name']" />
+          :display-multiple-keys="['iso', 'name']" check-duplicate />
 
 
         <d-submit-button @click:submit="casesStore.getAllCovidCase()" @click:clear="casesStore.clearQuery()" />
@@ -90,6 +90,10 @@ onMounted(async () => {
 
       </div>
 
+    </div>
+
+    <div>
+      <p-chart />
     </div>
   </div>
 </template>

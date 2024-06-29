@@ -12,8 +12,17 @@ const useCasesStore = defineStore({
       maps: {
         data: []
       } as CovidType,
+      recentCases: {
+        value: [] as Record<string, any>
+      },
       references: {
-        regions: []
+        regions: [] as Record<string, any>
+      },
+      charts: {
+        recent: {
+          data: [] as Record<string, any>,
+          labels: [] as Record<string, any>
+        }
       },
       query: {
         all_covid_case: {
@@ -32,6 +41,9 @@ const useCasesStore = defineStore({
           loading: false
         },
         regions: {
+          loading: false
+        },
+        recentCases: {
           loading: false
         }
       }
@@ -72,6 +84,37 @@ const useCasesStore = defineStore({
         console.log('Failed Load Data', error)
       } finally {
         this.meta.maps.loading = false
+      }
+    },
+    async getRecentCovidCase() {
+      if (this.meta.recentCases.loading) return
+      this.meta.recentCases.loading = true
+      try {
+        const response = await useMyFetch().get(
+          'https://xmart-api-public.who.int/DATA_/RELAY_COVID?%24filter=IND_CODE+eq+%27COVID_CASES_CONFIRMED_NEW_LAST_7DAYS%27+and+DIM_TIME_TYPE+eq+%27WEEK%27+and+DIM_TIME+ge+%272023-07-01%27+and+DIM_GEO_CODE_M49+eq+%27001%27+and+DIM_1_CODE+eq+null&%24select=DIM_GEO_CODE_M49%2CDIM_GEO_CODE_TYPE%2CDIM_TIME%2CDIM_1_CODE%2CDIM_2_CODE%2CDIM_3_CODE%2CDIM_4_CODE%2CDIM_5_CODE%2CDIM_6_CODE%2CDIM_MEMBER_1_CODE%2CDIM_MEMBER_2_CODE%2CDIM_MEMBER_3_CODE%2CDIM_MEMBER_4_CODE%2CDIM_MEMBER_5_CODE%2CDIM_MEMBER_6_CODE%2CDIM_VALUE_TYPE%2CVALUE_NUMERIC%2CVALUE_NUMERIC_LOWER%2CVALUE_NUMERIC_UPPER%2CVALUE_LABEL%2CVALUE_COMMENTS%2COBSERVATION_STATUS', {
+            // params: this.query.all_covid_case
+          }
+        )
+
+        this.recentCases.value = response.data?.value
+
+        let tempValue: any[] = []
+        let tempLabel: any[] = []
+        this.recentCases.value.forEach((item: any) => {
+          tempValue.push(item.VALUE_NUMERIC)
+          tempLabel.push(item.DIM_TIME)
+        })
+
+        this.charts.recent.data = tempValue
+        this.charts.recent.labels = tempLabel
+
+        return response
+      } catch (error) {
+        this.charts.recent.data = []
+        this.charts.recent.labels = []
+        console.log('Failed Load Data', error)
+      } finally {
+        this.meta.recentCases.loading = false
       }
     },
     async getRegions() {

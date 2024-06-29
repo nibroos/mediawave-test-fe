@@ -35,7 +35,7 @@ const isMenuShow = ref<boolean>(false)
 const innerSearch = useDebouncedRef<string>('')
 const queryString = ref<string>('')
 const selectedDetails = ref<any>(undefined)
-const options = ref<any[]>(props.items)
+const options = ref<Record<string, any>[]>(props.items)
 const displayTitle = ref<string>('')
 const initialLoadSingle = ref<boolean>(false)
 const initialItems = ref<any[]>(props.items)
@@ -62,8 +62,8 @@ const handleClear = async () => {
 const removeDuplicates = (array: any) => {
   const uniqueIds = new Set()
   return array.filter((item: any) => {
-    if (!uniqueIds.has(item.id)) {
-      uniqueIds.add(item.id)
+    if (!uniqueIds.has(item[props.itemValue])) {
+      uniqueIds.add(item[props.itemValue])
       return true
     }
     return false
@@ -72,25 +72,30 @@ const removeDuplicates = (array: any) => {
 
 watch(innerSearch, async (searchValue: string) => {
   if (isMenuShow.value) {
-    loadingSearch.value = true
-
-    // deep search all on props.items "like searchValue"
-    const filteredItems = props.items.filter((item) => {
-      return props.displayMultipleKeys.some((key) => {
-        return item[key]?.toLowerCase().includes(searchValue.toLowerCase())
-      })
-    })
-    if (props.checkDuplicate == true) {
-      options.value = removeDuplicates(options.value)
-    }
-    options.value = filteredItems
-
-    // options.value = []
-    // paginationDone.value = !property(props.pageEndProp)(resData)
-    page.value = 1
-    loadingSearch.value = false
+    searchInner(searchValue)
   }
 })
+
+const searchInner = (searchValue?: string) => {
+  loadingSearch.value = true
+
+  // deep search all on props.items "like searchValue"
+  const filteredItems = props.items.filter((item) => {
+    return props.displayMultipleKeys.some((key) => {
+      if (!searchValue) {
+        return true
+      }
+      return item[key]?.toLowerCase().includes(searchValue.toLowerCase())
+    })
+  })
+  if (props.checkDuplicate === true) {
+    options.value = removeDuplicates(options.value)
+  }
+  options.value = filteredItems
+
+  page.value = 1
+  loadingSearch.value = false
+}
 
 const onSelectOpt = (param?: string) => {
   if (!selected.value) {
@@ -130,11 +135,11 @@ watch(
 onMounted(() => {
 
   selected.value = null
-  if (props.checkDuplicate == true) {
-    options.value = removeDuplicates(options.value)
+  // if (props.checkDuplicate == true) {
+  // }
+  options.value = props.items
 
-
-  }
+  searchInner()
 
   if (props.modelValue) {
     selected.value = props.modelValue
@@ -146,6 +151,16 @@ onMounted(() => {
 })
 
 watchEffect(() => { })
+
+watch(
+  () => props.items,
+  (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+      initialItems.value = newVal
+      options.value = newVal
+    }
+  }
+)
 
 watch(
   () => props.modelValue,

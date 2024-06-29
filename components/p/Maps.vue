@@ -1,4 +1,5 @@
 <template>
+  <!-- <v-skeleton-loader type="image" v-if="meta.maps.loading"></v-skeleton-loader> -->
   <div id="map" class="w-full h-96"></div>
 </template>
 
@@ -7,7 +8,7 @@ import L from 'leaflet';
 import useCasesStore from '~/stores/CasesStore';
 
 const casesStore = useCasesStore();
-const { maps } = storeToRefs(casesStore);
+const { maps, meta } = storeToRefs(casesStore);
 
 let map;
 let markersLayer = L.layerGroup();
@@ -30,7 +31,7 @@ const updateMarkers = () => {
     const { confirmed, deaths, recovered, region } = country;
     const { name, lat, long } = region;
 
-    const marker = L.marker([lat, long]);
+    const marker = L.marker([lat ?? 0, long ?? 0]);
     marker.bindPopup(`
       <strong>${name}</strong><br>
       Total Confirmed: ${confirmed}<br>
